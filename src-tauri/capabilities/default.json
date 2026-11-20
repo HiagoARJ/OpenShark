@@ -1,0 +1,17 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Janela principal sem moldura: a barra de título da interface arrasta, minimiza e fecha. Mais o seletor de arquivos (importar/exportar) e os eventos do mouse (device://status, device://osd, profile://changed).",
+  "windows": ["main"],
+  "permissions": [
+    "core:app:default",
+    "core:event:default",
+    "core:window:default",
+    "core:webview:default",
+    "core:window:allow-start-dragging",
+    "core:window:allow-minimize",
+    "core:window:allow-close",
+    "dialog:allow-open",
+    "dialog:allow-save"
+  ]
+}

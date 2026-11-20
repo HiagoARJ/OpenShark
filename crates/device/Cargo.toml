@@ -1,0 +1,13 @@
+[package]
+name = "shark-device"
+description = "OpenShark: conexão HID com o mouse: detecção, eventos do receptor, envio e leitura"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+# Biblioteca C hidapi embutida.
+hidapi = "2.6.7"
+log = "0.4.35"
+serde = { version = "1.0.228", features = ["derive"] }
+shark-proto = { version = "0.1.0", path = "../proto" }

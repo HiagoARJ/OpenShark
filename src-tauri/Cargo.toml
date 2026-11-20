@@ -1,0 +1,30 @@
+[package]
+name = "shark-app"
+description = "OpenShark: configurador não oficial para mouses Attack Shark (Tauri 2 + interface React em ui/)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "openshark"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2.7.4", features = [] }
+
+[dependencies]
+env_logger = "0.11.11"
+log = "0.4.35"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
+shark-device = { version = "0.1.0", path = "../crates/device" }
+shark-proto = { version = "0.1.0", path = "../crates/proto" }
+tauri = { version = "2.12.5", features = ["tray-icon"] }
+# Seletor de arquivos para importar/exportar perfis e macros.
+tauri-plugin-dialog = "2.8.4"
+# Precisa ser o primeiro plugin: a segunda execução só traz a janela da primeira para a frente.
+tauri-plugin-single-instance = "2.5.5"
+
+# "Iniciar com o Windows" (HKCU\...\Run).
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.62.2", features = ["Win32_Foundation", "Win32_System_Registry"] }

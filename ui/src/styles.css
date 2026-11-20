@@ -1,0 +1,554 @@
+@import "tailwindcss";
+
+/* Tema padrão ("Tubarão"). Os outros temas trocam estes valores em [data-theme] mais abaixo. */
+@theme static {
+  --color-bg: #0d0d10;
+  --color-panel: #16161a;
+  --color-panel-2: #1d1d22;
+  /* Sempre opaco: janelas modais, avisos e menus (os painéis podem ser translúcidos). */
+  --color-solid: #17171b;
+  --color-line: #2a2a31;
+  --color-line-2: #3a3a43;
+  --color-text: #ececef;
+  --color-muted: #8d8d97;
+  --color-accent: #e2211c;
+  --color-accent-2: #ff4a3d;
+  --color-on-accent: #ffffff;
+  --color-ok: #3ccf7a;
+  --color-warn: #f2b33d;
+  --color-hover: rgb(255 255 255 / 0.06);
+  --color-track: #2c2c33;
+  --color-chrome: #101013;
+  --color-side: #121215;
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+  /* Palco atrás da imagem do mouse, fundo da tela de boas-vindas e desfoque dos painéis. */
+  --stage: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--color-accent) 16%, var(--color-panel)) 0%, var(--color-panel) 62%);
+  --stage-mini: transparent;
+  --hero: radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--color-accent) 13%, var(--color-bg)) 0%, var(--color-bg) 55%);
+  --glass: none;
+}
+
+/* ---------- Temas simples ---------- */
+
+[data-theme="ocean"] {
+  --color-bg: #0a1018;
+  --color-panel: #101a26;
+  --color-panel-2: #15212f;
+  --color-solid: #111c29;
+  --color-line: #1f3044;
+  --color-line-2: #2c4560;
+  --color-text: #e6eef7;
+  --color-muted: #7f93a8;
+  --color-accent: #1e9bff;
+  --color-accent-2: #5cc0ff;
+  --color-track: #1f3044;
+  --color-chrome: #0b131d;
+  --color-side: #0d1620;
+}
+
+[data-theme="emerald"] {
+  --color-bg: #0b100d;
+  --color-panel: #121a15;
+  --color-panel-2: #17211b;
+  --color-solid: #131c17;
+  --color-line: #223128;
+  --color-line-2: #31463a;
+  --color-text: #e8f1eb;
+  --color-muted: #84978b;
+  --color-accent: #19b36b;
+  --color-accent-2: #4be39a;
+  --color-track: #223128;
+  --color-chrome: #0c120f;
+  --color-side: #0e1511;
+}
+
+[data-theme="amethyst"] {
+  --color-bg: #0f0c15;
+  --color-panel: #17131f;
+  --color-panel-2: #1e1929;
+  --color-solid: #181421;
+  --color-line: #2c2540;
+  --color-line-2: #403659;
+  --color-text: #eeeaf6;
+  --color-muted: #9389a8;
+  --color-accent: #8b5cf6;
+  --color-accent-2: #b693ff;
+  --color-track: #2c2540;
+  --color-chrome: #110e18;
+  --color-side: #130f1b;
+}
+
+[data-theme="amoled"] {
+  --color-bg: #000000;
+  --color-panel: #0a0a0a;
+  --color-panel-2: #121212;
+  --color-solid: #0c0c0c;
+  --color-line: #1e1e1e;
+  --color-line-2: #303030;
+  --color-text: #f2f2f2;
+  --color-muted: #7d7d7d;
+  --color-accent: #ff5a1f;
+  --color-accent-2: #ff8a4c;
+  --color-track: #222222;
+  --color-chrome: #000000;
+  --color-side: #000000;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --color-bg: #f3f4f7;
+  --color-panel: #ffffff;
+  --color-panel-2: #f0f1f5;
+  --color-solid: #ffffff;
+  --color-line: #dfe1e8;
+  --color-line-2: #c5c8d3;
+  --color-text: #1b1c21;
+  --color-muted: #6b6e7b;
+  --color-accent: #d91f1a;
+  --color-accent-2: #ee3a30;
+  --color-ok: #1f9d57;
+  --color-warn: #b77a08;
+  --color-hover: rgb(0 0 0 / 0.05);
+  --color-track: #d5d8e0;
+  --color-chrome: #ffffff;
+  --color-side: #e9ebf0;
+  /* O mouse das imagens é branco: no tema claro ele fica sobre um palco escuro. */
+  --stage: radial-gradient(circle at 50% 60%, #4d5160 0%, #262932 66%);
+  --stage-mini: radial-gradient(circle at 50% 60%, #4d5160 0%, #262932 70%);
+}
+
+/* ---------- Temas animados: painéis translúcidos sobre o cenário de ThemeBackground.tsx ---------- */
+
+[data-theme="constellation"] {
+  --color-bg: #05060d;
+  --color-panel: rgb(16 18 36 / 0.5);
+  --color-panel-2: rgb(26 29 52 / 0.55);
+  --color-solid: #0f1124;
+  --color-line: rgb(160 170 255 / 0.14);
+  --color-line-2: rgb(160 170 255 / 0.3);
+  --color-text: #eceeff;
+  --color-muted: #9197c0;
+  --color-accent: #6d7dff;
+  --color-accent-2: #9aa5ff;
+  --color-track: rgb(170 180 255 / 0.15);
+  --color-chrome: rgb(5 6 13 / 0.55);
+  --color-side: rgb(8 9 20 / 0.45);
+  --glass: blur(10px);
+  --hero: transparent;
+}
+
+@property --hue {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+[data-theme="chroma"] {
+  --color-bg: #08080b;
+  --color-panel: rgb(20 20 26 / 0.6);
+  --color-panel-2: rgb(32 32 40 / 0.65);
+  --color-solid: #131318;
+  --color-line: rgb(255 255 255 / 0.1);
+  --color-line-2: rgb(255 255 255 / 0.22);
+  --color-text: #f0f0f4;
+  --color-muted: #9494a3;
+  /* O destaque percorre o círculo de cores: tudo que usa a cor de destaque acompanha. */
+  --color-accent: hsl(var(--hue) 92% 56%);
+  --color-accent-2: hsl(calc(var(--hue) + 35) 95% 66%);
+  --color-track: rgb(255 255 255 / 0.13);
+  --color-chrome: rgb(8 8 11 / 0.6);
+  --color-side: rgb(10 10 14 / 0.5);
+  --glass: blur(16px);
+  --hero: transparent;
+  animation: hue-cycle 14s linear infinite;
+}
+
+@keyframes hue-cycle {
+  to {
+    --hue: 360;
+  }
+}
+
+/* ---------- Base ---------- */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  user-select: none;
+  overflow: hidden;
+}
+
+input,
+textarea,
+select {
+  user-select: text;
+}
+
+.stage {
+  background: var(--stage);
+}
+.stage-mini {
+  background: var(--stage-mini);
+}
+.hero {
+  background: var(--hero);
+}
+
+/* Vidro: o desfoque fica num pseudo-elemento para não prender as janelas modais (position: fixed)
+   dentro do painel, como aconteceria com backdrop-filter no próprio elemento. */
+.glass {
+  position: relative;
+  isolation: isolate;
+}
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  backdrop-filter: var(--glass);
+  pointer-events: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-track);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Slider: preenchimento na cor de destaque até o valor (via --fill). */
+input[type="range"].slider {
+  appearance: none;
+  height: 6px;
+  border-radius: 6px;
+  background: linear-gradient(
+    to right,
+    var(--color-accent) 0%,
+    var(--color-accent-2) var(--fill, 0%),
+    var(--color-track) var(--fill, 0%)
+  );
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"].slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--color-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 18%, transparent);
+  transition: transform 0.15s;
+}
+input[type="range"].slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+input[type="range"].slider:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  appearance: none;
+}
+
+/* ---------- Movimento da interface (todos os temas) ---------- */
+
+@keyframes pulse-dot {
+  50% {
+    opacity: 0.35;
+  }
+}
+.pulse {
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+
+@keyframes tab-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+.tab-in {
+  animation: tab-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+}
+.pop-in {
+  animation: pop-in 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+.toast-in {
+  animation: toast-in 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.card {
+  transition:
+    border-color 0.2s,
+    box-shadow 0.3s;
+}
+
+/* Troca de tema: o tema novo se abre em círculo a partir do clique. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: theme-reveal 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0));
+  }
+  to {
+    clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 0));
+  }
+}
+
+/* Miniaturas dos temas animados no seletor. */
+.preview-anim {
+  background-size: 200% 200% !important;
+  animation: preview-pan 6s ease-in-out infinite alternate;
+}
+@keyframes preview-pan {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 100% 100%;
+  }
+}
+
+/* ---------- Aurora ---------- */
+
+/* ---------- Abismo ---------- */
+
+.abyss-rays span {
+  position: absolute;
+  top: -20%;
+  height: 120%;
+  transform: rotate(14deg);
+  transform-origin: top;
+  background: linear-gradient(180deg, rgb(150 230 255 / 0.22), transparent 75%);
+  filter: blur(14px);
+  animation: abyss-ray 9s ease-in-out infinite alternate;
+}
+@keyframes abyss-ray {
+  from {
+    opacity: 0.25;
+    transform: rotate(11deg) translateX(-20px);
+  }
+  to {
+    opacity: 0.9;
+    transform: rotate(17deg) translateX(30px);
+  }
+}
+.abyss-bubble {
+  position: absolute;
+  bottom: -30px;
+  border-radius: 50%;
+  border: 1px solid rgb(190 240 255 / 0.55);
+  background: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.5), rgb(120 210 255 / 0.08) 60%);
+  animation: abyss-rise linear infinite;
+}
+@keyframes abyss-rise {
+  0% {
+    transform: translate(0, 0) scale(0.6);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(var(--sway), -55vh) scale(0.9);
+  }
+  100% {
+    transform: translate(0, -112vh) scale(1.15);
+    opacity: 0;
+  }
+}
+.abyss-shark {
+  position: absolute;
+  top: 52%;
+  left: 0;
+  width: 300px;
+  fill: rgb(1 8 14 / 0.7);
+  filter: blur(1.5px);
+  animation: abyss-swim 48s linear infinite;
+}
+.abyss-shark path {
+  transform-origin: 40% 50%;
+  animation: abyss-wiggle 1.6s ease-in-out infinite alternate;
+}
+@keyframes abyss-swim {
+  0% {
+    transform: translate(110vw, 4vh);
+  }
+  60%,
+  100% {
+    transform: translate(-320px, -10vh);
+  }
+}
+@keyframes abyss-wiggle {
+  from {
+    transform: rotate(-2deg) skewY(-1.5deg);
+  }
+  to {
+    transform: rotate(2deg) skewY(1.5deg);
+  }
+}
+
+/* ---------- Synthwave ---------- */
+
+[data-theme="synthwave"] .scene {
+  background: linear-gradient(180deg, #14042b 0%, #2a0845 38%, #5c1168 58%, #14042b 58.2%);
+}
+.synth-stars span {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff;
+  animation: synth-twinkle 3.5s ease-in-out infinite;
+}
+@keyframes synth-twinkle {
+  50% {
+    opacity: 0.15;
+  }
+}
+.synth-sun {
+  position: absolute;
+  left: 50%;
+  bottom: 42%;
+  width: 300px;
+  height: 300px;
+  margin-left: -150px;
+  margin-bottom: -70px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffd23f 0%, #ff7a3d 45%, #ff3d81 100%);
+  mask-image: linear-gradient(180deg, #000 0 50%, transparent 50% 53%, #000 53% 61%, transparent 61% 65%, #000 65% 72%, transparent 72% 77%, #000 77% 83%, transparent 83% 89%, #000 89% 93%, transparent 93%);
+  filter: drop-shadow(0 0 40px rgb(255 80 180 / 0.7));
+  animation: synth-sun 6s ease-in-out infinite alternate;
+}
+@keyframes synth-sun {
+  to {
+    transform: translateY(-10px) scale(1.03);
+    filter: drop-shadow(0 0 70px rgb(255 80 180 / 0.9));
+  }
+}
+.synth-floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42%;
+  perspective: 240px;
+  perspective-origin: 50% 0%;
+  overflow: hidden;
+  background: #14042b;
+}
+.synth-grid {
+  position: absolute;
+  /* O plano gira pela borda de baixo: o topo se afasta até a linha do horizonte. */
+  left: -60%;
+  bottom: 0;
+  width: 220%;
+  height: 300%;
+  transform-origin: bottom center;
+  transform: rotateX(64deg);
+  background-image:
+    linear-gradient(rgb(255 61 129 / 0.8) 2px, transparent 2px), linear-gradient(90deg, rgb(61 245 255 / 0.55) 2px, transparent 2px);
+  background-size: 52px 52px;
+  animation: synth-grid 1.4s linear infinite;
+}
+@keyframes synth-grid {
+  to {
+    background-position: 0 52px;
+  }
+}
+.synth-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(13 2 33 / 0.3), rgb(13 2 33 / 0.15) 50%, rgb(13 2 33 / 0.6));
+}
+/* ---------- Constelação ---------- */
+
+.constellation-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 15%, rgb(70 80 220 / 0.28), transparent 45%), radial-gradient(circle at 85% 80%, rgb(150 60 220 / 0.2), transparent 45%);
+  animation: constellation-drift 18s ease-in-out infinite alternate;
+}
+@keyframes constellation-drift {
+  to {
+    transform: scale(1.15) translate(2%, -2%);
+  }
+}
+
+/* ---------- Chroma RGB ---------- */
+
+.chroma-wheel {
+  position: absolute;
+  inset: -60%;
+  background: conic-gradient(from 0deg, #ff004c, #ffb300, #2dff6a, #00c8ff, #8a2bff, #ff004c);
+  filter: blur(90px);
+  opacity: 0.4;
+  animation: chroma-spin 24s linear infinite;
+}
+.chroma-veil {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgb(8 8 11 / 0.35), rgb(8 8 11 / 0.9) 80%);
+}
+@keyframes chroma-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+[data-theme="chroma"] .card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 28px -12px var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root,
+  .scene *,
+  .tab-in,
+  .pop-in,
+  .toast-in,
+  .preview-anim {
+    animation: none !important;
+  }
+}
